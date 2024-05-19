@@ -35,8 +35,11 @@ func (w *Watcher) Start() error {
 		defer wg.Done()
 		for {
 			select {
-			case <-w.inCh:
+			case str := <-w.inCh:
+				w.counterLock.Lock()
 				w.counter.Iteration += 1
+				w.counter.Value = str // Set the new hex value
+				w.counterLock.Unlock()
 				select {
 				case w.outCh <- w.counter:
 				case <-w.quitChannel:
