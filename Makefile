@@ -2,22 +2,24 @@
 
 .PHONY: chmod
 chmod:
-	chmod +x goapp/scripts/run_tests.sh
+	echo "Setting executable permissions..."
+	chmod +x scripts/run_tests.sh
+	chmod +x scripts/run_client.sh
 
 .PHONY: all
-all: clean goapp
+all: clean chmod goapp client
 
 .PHONY: goapp
-goapp:
+goapp: chmod client
 	mkdir -p bin
 	go build -o bin ./...
-
-.PHONY: clean
-clean:
-	go clean
-	rm -f bin/*
 
 .PHONY: client
 client:
 	mkdir -p bin
 	go build -o bin/client ./cmd/client
+
+.PHONY: clean
+clean:
+	go clean
+	rm -f bin/*
