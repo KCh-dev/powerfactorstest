@@ -21,6 +21,7 @@ RUN \
 COPY --from=build /go/src/goapp/bin /goapp
 
 # Set executable permissions for the script
-RUN chmod +x /goapp/scripts/run_tests.sh
+RUN chmod +x /goapp/scripts/run_tests.sh && \
+    chmod +x /goapp/scripts/run_client.sh
 
 ENTRYPOINT ["/goapp/goapp"]
