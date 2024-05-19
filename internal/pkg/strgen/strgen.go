@@ -36,7 +36,7 @@ func (s *StringGenerator) mainLoop() {
 	defer s.running.Done()
 	for {
 		select {
-		case s.strChan <- util.RandHexString(20): // 20 characters of hex (10 bytes)
+		case s.strChan <- util.RandString(20): // 20 characters of hex (10 bytes)
 		case <-s.quitChannel:
 			return
 		default:

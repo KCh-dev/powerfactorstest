@@ -1,7 +1,6 @@
 package util
 
 import (
-	"encoding/hex"
 	"math/rand"
 )
 
@@ -31,12 +30,4 @@ func RandString(n int) string {
 	}
 
 	return string(b)
-}
-
-func RandHexString(n int) string {
-	bytes := make([]byte, n/2) // Generate half the length because each byte becomes two hex characters
-	if _, err := rand.Read(bytes); err != nil {
-		panic(err) // For simplicity in this example; handle error appropriately in production code
-	}
-	return hex.EncodeToString(bytes)
 }
