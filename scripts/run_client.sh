@@ -11,4 +11,8 @@ elif [ "$#" -gt 1 ]; then
     exit 1
 fi
 
-../bin/client -n "$num_connections"
+# Navigate to the root directory of the project
+cd "$(dirname "$0")/.." || exit
+
+# Run the client with the specified or default number of connections
+./bin/client -n "$num_connections"
