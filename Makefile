@@ -1,5 +1,9 @@
 .DEFAULT_GOAL := goapp
 
+.PHONY: chmod
+chmod:
+	chmod +x goapp/scripts/run_tests.sh
+
 .PHONY: all
 all: clean goapp
 
