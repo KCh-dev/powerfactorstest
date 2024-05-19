@@ -1,7 +1,7 @@
 package strgen
 
 import (
-	"goapp/pkg/util"
+	"goapp/pkg/util" // Ensure this is the correct path to your util package
 	"sync"
 	"time"
 )
@@ -24,7 +24,6 @@ func New(strChan chan<- string) *StringGenerator {
 func (s *StringGenerator) Start() error {
 	s.running.Add(1)
 	go s.mainLoop()
-
 	return nil
 }
 
@@ -35,10 +34,9 @@ func (s *StringGenerator) Stop() {
 
 func (s *StringGenerator) mainLoop() {
 	defer s.running.Done()
-
 	for {
 		select {
-		case s.strChan <- util.RandString(10):
+		case s.strChan <- util.RandHexString(20): // 20 characters of hex (10 bytes)
 		case <-s.quitChannel:
 			return
 		default:
