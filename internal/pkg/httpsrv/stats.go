@@ -17,12 +17,16 @@ func (w *sessionStats) inc() {
 
 func (s *Server) incStats(id string) {
 	// Find and increment.
-	for _, ws := range s.sessionStats {
-		if ws.id == id {
-			ws.inc()
-			return
+	found := false
+	for i := range s.sessionStats {
+		if s.sessionStats[i].id == id {
+			s.sessionStats[i].inc()
+			found = true
+			break
 		}
 	}
-	// Not found, add new.
-	s.sessionStats = append(s.sessionStats, sessionStats{id: id, sent: 1})
+	if !found {
+		// Not found, add new.
+		s.sessionStats = append(s.sessionStats, sessionStats{id: id, sent: 1})
+	}
 }
