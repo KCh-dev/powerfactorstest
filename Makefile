@@ -16,3 +16,8 @@ goapp:
 clean:
 	go clean
 	rm -f bin/*
+
+.PHONY: client
+client:
+	mkdir -p bin
+	go build -o bin/client ./cmd/client
