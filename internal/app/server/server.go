@@ -2,17 +2,18 @@ package goapp
 
 import (
 	"fmt"
+	"goapp/internal/config"
 	"goapp/internal/pkg/httpsrv"
 	"goapp/internal/pkg/strgen"
 	"log"
 	"os"
 )
 
-func Start(exitChannel chan os.Signal) error {
+func Start(cfg *config.Config, exitChannel chan os.Signal) error {
 	var (
-		strChan = make(chan string, 100) // String channel with max parallel counter processes.
-		strCli  = strgen.New(strChan)    // String generator.
-		httpSrv = httpsrv.New(strChan)   // HTTP server.
+		strChan = make(chan string, 100)    // String channel with max parallel counter processes.
+		strCli  = strgen.New(strChan)       // String generator.
+		httpSrv = httpsrv.New(strChan, cfg) // HTTP server, now passing config
 	)
 
 	// Start String Generator.

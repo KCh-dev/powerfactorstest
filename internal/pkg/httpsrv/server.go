@@ -2,6 +2,7 @@ package httpsrv
 
 import (
 	"context"
+	"goapp/internal/config"
 	"log"
 	"net/http"
 	"os"
@@ -22,9 +23,10 @@ type Server struct {
 	sessionStats []sessionStats              // Session stats.
 	quitChannel  chan struct{}               // Quit channel.
 	running      sync.WaitGroup              // Running goroutines.
+	config       *config.Config              // Configuration for the server
 }
 
-func New(strChan <-chan string) *Server {
+func New(strChan <-chan string, cfg *config.Config) *Server {
 	s := Server{}
 	s.strChan = strChan
 	s.server = nil // Set below.
@@ -33,6 +35,7 @@ func New(strChan <-chan string) *Server {
 	s.sessionStats = []sessionStats{}
 	s.quitChannel = make(chan struct{})
 	s.running = sync.WaitGroup{}
+	s.config = cfg
 	return &s
 }
 
