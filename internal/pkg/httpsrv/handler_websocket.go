@@ -26,6 +26,11 @@ func (s *Server) handlerWebSocket(w http.ResponseWriter, r *http.Request) {
 	// Start WS.
 	var upgrader = websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool {
+			if !s.isValidOrigin(r.Header.Get("Origin")) {
+				log.Printf("Invalid origin: %s", r.Header.Get("Origin"))                          // Additional logging
+				http.Error(w, "Access Denied: Your origin is not allowed.", http.StatusForbidden) // Custom error message
+				return false
+			}
 			return true
 		},
 	}
@@ -92,4 +97,13 @@ func (s *Server) handlerWebSocket(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+
+func (s *Server) isValidOrigin(origin string) bool {
+	for _, allowedOrigin := range s.config.AllowedOrigins {
+		if origin == allowedOrigin {
+			return true
+		}
+	}
+	return false
 }
