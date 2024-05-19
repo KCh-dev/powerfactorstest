@@ -10,5 +10,5 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Running benchmarks..."
-go test -bench=. ./path/to/strgen
+go test -bench=. ../internal/pkg/strgen/strgen_test.go
 
